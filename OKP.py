@@ -66,29 +66,26 @@ class OKP(object):
         self.row_pointer = 0
         self.col_pointer = 0
         winner = ''
-        self.add_players()
         self.get_player_list()
         print(self.get_board())
         game_end = False
         while not game_end:
-            r = self.row_pointer
             # 13 is taken as the number of open fingers to be moved each time Oramma is evoked.
             self.row_pointer = self.karakk(13, 'r')
             self.col_pointer = self.karakk(13, 'c')
             print("Oramma kadayil poyi, \nOru dazan vala vaangi, \nAa valayude niramenth?")
             print(f"{self.player_names[self.row_pointer]}:")
             c = input()
-            r = self.row_pointer
             self.row_pointer = self.karakk(len(c), 'r')
             self.col_pointer = self.karakk(len(c), 'c')
             self.game_board[self.row_pointer, self.col_pointer] = 0
             print(self.get_board())
             game_end = self.check_game()
             winner = self.player_names[self.row_pointer]  # winner will be printed only after while loop is break
-            r = row_pointer
-            row_pointer = self.karakk(1, 'r')
+            self.row_pointer = self.karakk(1, 'r')
             self.col_pointer = self.karakk(1, 'c')
         print(f'Winner is {winner}')
 
 
 new_game = OKP()
+new_game.start_game()
