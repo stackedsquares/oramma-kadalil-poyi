@@ -44,7 +44,7 @@ class OKP(object):
                 break
         return False
 
-    def karakk(self, num, rc):
+    def karakk(self, num):
 
         is_counting = True
         count = 0
@@ -61,11 +61,7 @@ class OKP(object):
                 count += 1
             if count == 13:
                 is_counting = False
-        if self.rc == 'r':
-            return self.row_pointer
-        else:
-            return self.col_pointer
-
+        return self.row_pointer, self.col_pointer
 '''
    async def botsay(self,ctx, inp):
         sleep(1.5)
@@ -115,8 +111,7 @@ class kali(commands.Cog):
         while not game_end:
             game_embed = Embed()
             # 13 is taken as the number of open fingers to be moved each time Oramma is evoked.
-            oramma.row_pointer = oramma.karakk(13, 'r')
-            oramma.col_pointer = oramma.karakk(13, 'c')
+            oramma.row_pointer, oramma.col_pointer = oramma.karakk(13)
             game_embed.description = "Oramma kadayil poyi, \nOru dazan vala vaangi, \nAa valayude niramenth?"
             await ctx.send(embed=game_embed)
             sleep(0.5)
@@ -128,20 +123,17 @@ class kali(commands.Cog):
             c='orangeeee'
             game_embed.description = str(c)
             await ctx.send(embed=game_embed)
-            oramma.row_pointer = oramma.karakk(len(c), 'r')
-            oramma.col_pointer = oramma.karakk(len(c), 'c')
+            oramma.row_pointer, oramma.col_pointer = oramma.karakk(len(c))
             oramma.game_board[oramma.row_pointer, oramma.col_pointer] = 0
             sleep(0.5)
             game_embed.description = str(oramma.get_board())
             await ctx.send(embed=game_embed)
             game_end = oramma.check_game()
             winner = oramma.player_names[oramma.row_pointer]  # winner will be printed only after while loop is break
-            oramma.row_pointer = oramma.karakk(1, 'r')
-            oramma.col_pointer = oramma.karakk(1, 'c')
+            oramma.row_pointer, oramma.col_pointer = oramma.karakk(1)
             sleep(0.5)
             game_embed.description = f'Winner is {winner}'
             await ctx.send(embed=game_embed)
-            break
 
 
 def setup(bot):
